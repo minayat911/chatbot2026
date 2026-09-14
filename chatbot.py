@@ -48,10 +48,8 @@ def used_tokens(messages):
 # Function to enforce the token budget by removing the older messages if needed
 def enforce_token_budget(messages, budget = TOKEN_BUDGET):
     try: 
-        while used_tokens(messages) > budget:
-            # Remove the oldest user message (after the system prompt)
-            if len(messages) > 1:
-                break
+        while used_tokens(messages) > budget and len(messages) > 1:
+            # Keep the system prompt and remove the oldest conversation message
             messages.pop(1)
     except Exception as e:
         print(f"Error enforcing token budget: {e}")
